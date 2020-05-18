@@ -4,4 +4,4 @@ Attribution:
 * MultiColorsClose.jpg - Dean Hochman, CCv2.0
 * OldBWPongGame.jpg - DOE, Public Domain
 * TanPong.jpg - DoD, Public Domain
-* BlurPink.jpg - Seattle City Counci, CC0
+* BlurPink.jpg - Seattle City Council, CC0
