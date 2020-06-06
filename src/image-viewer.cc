@@ -15,10 +15,62 @@ static int VIEWER_HEIGHT = 768;
 void ToolMenu()
 {
     ImGui::Begin("Image Tools");
-    static bool pressed = false;
-    ImGui::Text("Hello lassies!");
-    pressed = pressed || ImGui::Button("Do NOT Press!");
-    if (pressed) ImGui::Text("I told you bro, I warned you!");
+    if (ImGui::BeginTabBar("##ToolGroups"))
+    {
+        // TODO: Something like "for each toolgroup"
+        if (ImGui::BeginTabItem("Filter"))
+        {
+            // e.g. colorspaces, smoothing, gradients, edge
+            // https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_table_of_contents_imgproc/py_table_of_contents_imgproc.html
+            if (ImGui::TreeNode("smoothing"))
+            {
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNode("colorspace"))
+            {
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNode("gradient"))
+            {
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNode("edges"))
+            {
+                ImGui::TreePop();
+            }
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Homography"))
+        {
+            if (ImGui::TreeNode("Correction"))
+            {
+                ImGui::TreePop();
+            }
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Distortion"))
+        {
+            if (ImGui::TreeNode("Correction"))
+            {
+                ImGui::TreePop();
+            }
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Feature Extraction"))
+        {
+            if (ImGui::TreeNode("SIFT"))
+            {
+                ImGui::TreePop();
+            }
+            if (ImGui::TreeNode("Akaze"))
+            {
+                ImGui::TreePop();
+            }
+            ImGui::EndTabItem();
+        }
+
+        ImGui::EndTabBar();
+    }
     ImGui::End();
 }
 
@@ -50,7 +102,14 @@ static void DrawMainImageWindow()
             // go through options
             if (ImGui::MenuItem("New", "CTRL+N")) {}
             if (ImGui::MenuItem("Open", "CTRL+O")) {}
-            if (ImGui::MenuItem("Open Recent")) {}
+            if (ImGui::BeginMenu("Open Recent"))
+            {
+                // Iterate through recently opened menus...
+                ImGui::MenuItem("placeholder1.png");
+                ImGui::MenuItem("pholder2.jpg");
+                ImGui::MenuItem("HopeToSupportAnimated.gif");
+                ImGui::EndMenu();
+            }
             if (ImGui::MenuItem("Save", "CTRL+S")) {}
             if (ImGui::MenuItem("Save As..")) {}
             if (ImGui::MenuItem("Quit","ALT+F4")) {}
