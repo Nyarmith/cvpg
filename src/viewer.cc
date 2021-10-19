@@ -7,10 +7,59 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <string>
 
 static int VIEWER_WIDTH = 1024;
 static int VIEWER_HEIGHT = 768;
 
+
+class Window
+{
+    virtual void draw()=0;
+    virtual ~Window()=0;
+};
+
+class ErrorMessageWindow
+{
+public:
+    std::string error;
+private:
+    ErrorMessageWindow(std::string name)
+    {
+    }
+
+    draw()
+    {
+        ImGui::Begin("error");
+        ImGui::Text(name.c_str());
+        ImGui::End();
+    }
+
+    ~ErrorMessageWindow(){}
+};
+
+std::vector<ImageSource> g_sources;
+std::vector<Window> g_wins;
+
+
+void DrawSources()
+{
+    for (auto& source : g_sources)
+    {
+        ImGui::Begin(g_sources->name())
+        {
+            switch(format)
+            {
+                case format::rgb8:
+                    glTexImage2D();
+                    break;
+                case format::rgba8:
+                    glTexImage2D();
+                    break;
+            }
+        }
+    }
+}
 
 void ToolMenu()
 {
@@ -74,6 +123,27 @@ void ToolMenu()
     ImGui::End();
 }
 
+void FileDialog
+{
+    fileDialog.Display();
+    if (fileDialog.HasSelected())
+    {
+        std::string file = fileDialog.GetSelected().string();
+        int i = file.rfind(".");
+        if (file.substr(i+1) == "ppm)
+        {
+            g_sources.push_back(std::move(PpmSource(file));
+        }
+        else
+        {
+            g_wins.push_back(ErrorMessageWindow("Unsupported file format!"));
+        }
+
+        fileDialog.ClearSelected();
+    }
+}
+
+
 static void glfw_error_callback(int error, const char* description)
 {
         std::cerr << "GLFW error: " << error << ", " << description << std::endl;
@@ -101,7 +171,7 @@ static void DrawMainImageWindow()
         {
             // go through options
             if (ImGui::MenuItem("New", "CTRL+N")) {}
-            if (ImGui::MenuItem("Open", "CTRL+O")) {}
+            if (ImGui::MenuItem("Open", "CTRL+O")) {fileDialog.Open()}
             if (ImGui::BeginMenu("Open Recent"))
             {
                 // Iterate through recently opened menus...
@@ -207,6 +277,7 @@ int main()
 
         DrawMainImageWindow();
         ToolMenu();
+        DrawSources();
 
         // Render
         ImGui::Render();
